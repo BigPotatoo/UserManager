@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "54320:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=Users
+      - POSTGRES_PASSWORD=123
+  app:
+    image: bigpotato/user-management
+    environment:
+      - PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/Users
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    links:
+      - postgres
